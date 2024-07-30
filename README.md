@@ -2,43 +2,6 @@
 
 Mini social network that I made as my first web app project.
 
-## Demo
-
-[social-network](http://46.101.189.55/login)
-
-## Screenshots
-
-![](screenshots/Screenshot%20from%202020-02-28%2023-25-47.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-02-15.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-04-54.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-06-32.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-07-23.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-07-45.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-07-06.png)
-![](screenshots/Screenshot%20from%202020-02-29%2002-19-26.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-21-47.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-01-38.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-08-45.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-25-55.png)
-![](screenshots/Screenshot%20from%202020-02-29%2019-26-42.png)
-
-## Gif
-
-![](<screenshots/ezgif.com-video-to-gif%20(1).gif>)
-
-## Link to a full video
-
-[Video](https://streamable.com/5srsv)
-
-## Built With
-
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-- [Redux](https://redux.js.org/) - State managment
-- [Semantic UI React](https://react.semantic-ui.com/) - UI
-- [Socket.io](https://socket.io/) - Used for realtime features
-- [Node](https://nodejs.org/en/) - Used for backend
-- [Mongodb](https://www.mongodb.com/) - Database
-
 ## Features
 
 - Like posts, comments, replies
@@ -94,7 +57,3 @@ with your local IP address on port 5000 eg.
 ```
 npm run dev
 ```
-
-## Contribute
-
-Show your support by ⭐ the project.
