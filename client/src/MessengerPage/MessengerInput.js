@@ -8,13 +8,13 @@ import { throttle } from "throttle-debounce";
 import { alertActions } from "../actions/alertActions";
 import {
   extractImageFileExtensionFromBase64,
-  base64StringtoFile
+  base64StringtoFile,
 } from "../reusable/ReusableUtils";
 
 const imageMaxSize = 10485760; // bytes 10MB
 const acceptedFileTypes =
   "image/x-png, image/png, image/jpg, image/jpeg, image/gif";
-const acceptedFileTypesArray = acceptedFileTypes.split(",").map(item => {
+const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {
   return item.trim();
 });
 
@@ -24,7 +24,7 @@ class MessengerInput extends Component {
 
     this.state = {
       value: "",
-      showPicker: false
+      showPicker: false,
     };
 
     this.debouncedTyping = throttle(3000, this.sendTypingStatus);
@@ -32,43 +32,52 @@ class MessengerInput extends Component {
 
   componentDidMount() {
     this.timer = null;
+    console.log("Socket in componentDidMount:", this.props.socket); // Kiểm tra socket
   }
 
   sendTypingStatus = () => {
     const {
       socket,
-      chat: { roomId, currentRoom }
+      chat: { roomId, currentRoom },
     } = this.props;
-    socket.emit("typing", { roomId, userId: currentRoom.user._id });
+    if (socket) {
+      socket.emit("typing", { roomId, userId: currentRoom.user._id });
+    } else {
+      console.error("Socket is undefined in sendTypingStatus");
+    }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const {
       socket,
-      chat: { roomId, currentRoom }
+      chat: { roomId, currentRoom },
     } = this.props;
     this.debouncedTyping();
     clearTimeout(this.timer);
 
     this.setState({ value: e.target.value });
     this.timer = setTimeout(() => {
-      socket.emit("stoppedTyping", { roomId, userId: currentRoom.user._id });
+      if (socket) {
+        socket.emit("stoppedTyping", { roomId, userId: currentRoom.user._id });
+      } else {
+        console.error("Socket is undefined in handleChange");
+      }
     }, 3000);
   };
 
-  addEmoji = e => {
+  addEmoji = (e) => {
     let emoji = e.native;
     this.setState({
-      value: this.state.value + emoji
+      value: this.state.value + emoji,
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const {
       dispatch,
       chat: { roomId, currentRoom },
-      userId
+      userId,
     } = this.props;
     const { value } = this.state;
     if (value !== "") {
@@ -78,7 +87,7 @@ class MessengerInput extends Component {
           value,
           roomId,
           sender: userId,
-          uuid: uuid()
+          uuid: uuid(),
         })
       );
     }
@@ -90,11 +99,11 @@ class MessengerInput extends Component {
     this.setState({ showPicker: !this.state.showPicker });
   };
 
-  handleFileSelect = event => {
+  handleFileSelect = (event) => {
     const {
       dispatch,
       chat: { roomId, currentRoom },
-      userId
+      userId,
     } = this.props;
     const files = event.target.files;
     if (files && files.length > 0) {
@@ -124,7 +133,7 @@ class MessengerInput extends Component {
                 value: "Image",
                 sender: userId,
                 roomId,
-                uuid: uniqueId
+                uuid: uniqueId,
               })
             );
           },
@@ -136,7 +145,7 @@ class MessengerInput extends Component {
     }
   };
 
-  verifyFile = files => {
+  verifyFile = (files) => {
     if (files && files.length > 0) {
       const currentFile = files[0];
       const currentFileType = currentFile.type;
@@ -175,7 +184,7 @@ class MessengerInput extends Component {
         <div
           style={{
             display,
-            justifyItems: "end"
+            justifyItems: "end",
           }}
         >
           <Picker native={true} onSelect={this.addEmoji} />
@@ -208,10 +217,10 @@ class MessengerInput extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   chat: state.chat,
   socket: state.socket.socket,
-  userId: state.user.data._id
+  userId: state.user.data._id,
 });
 
 const connectedMessengerInput = connect(mapStateToProps)(MessengerInput);
